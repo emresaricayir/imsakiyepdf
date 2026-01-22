@@ -12,7 +12,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 // Diyanet API bilgileri (ŞU ANDA KULLANILMIYOR - Sadece test endpoint'leri için)
 // define('DIYANET_API_BASE', 'https://awqatsalah.diyanet.gov.tr');
-// define('DIYANET_USERNAME', 'emresaricayir@gmail.com');
+// define('DIYANET_USERNAME', 'mailim');
 // define('DIYANET_PASSWORD', '5R%g+6cY');
 // define('DIYANET_TOKEN_FILE', __DIR__ . '/.diyanet_token');
 

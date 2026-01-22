@@ -51,3 +51,36 @@ DirectoryIndex index.html index.php
         Header set Cache-Control "no-cache, must-revalidate"
     </FilesMatch>
 </IfModule>
+
+# --- GÜVENLİK AYARLARI ---
+<IfModule mod_headers.c>
+    # 1. XSS Koruması: Tarayıcının XSS filtrelerini zorunlu kılar
+    Header set X-XSS-Protection "1; mode=block"
+
+    # 2. Clickjacking Koruması: Sitenin başka sitede iframe içinde açılmasını engeller
+    Header set X-Frame-Options "SAMEORIGIN"
+
+    # 3. MIME Sniffing Koruması: Dosya türlerinin tarayıcı tarafından yanlış yorumlanmasını önler
+    Header set X-Content-Type-Options "nosniff"
+
+    # 4. HSTS: Sadece HTTPS üzerinden bağlantıya zorlar
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # 5. Referrer Policy: Siteden dışarı giden linklerde gizliliği korur
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # 6. Content Security Policy (CSP) - ÇOK ÖNEMLİ
+    # Sadece kendi domaininden ve güvenli kaynaklardan script yüklenmesine izin verir
+    # cdnjs.cloudflare.com: jsPDF, html2canvas, html2pdf.js için gerekli
+    # unsafe-inline: HTML içindeki inline script'ler için gerekli (html2canvas için)
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self';"
+</IfModule>
+
+# Dizindeki dosyaların listelenmesini engeller (Güvenlik için kritik)
+Options -Indexes
+
+# Hassas dosyalara erişimi engelle (Config dosyaları, loglar, veritabanı vb.)
+<FilesMatch "(\.(bak|config|sql|log|sh|inc|php~|db|sqlite|sqlite3))$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
