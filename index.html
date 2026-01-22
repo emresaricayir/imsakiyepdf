@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>İmsakiye - Ramazan Namaz Vakitleri</title>
+    <link rel="stylesheet" href="styles.css?v=20260104">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header - Sadece imsakiye sayfasında görünür -->
+        <header id="main-header" style="display: none;">
+            <div class="header-content">
+                <div class="header-logo-container">
+                    <img src="logo.webp" alt="DİTİB Logo" class="header-logo">
+                </div>
+                <div class="header-title-container">
+                    <h1 class="header-main-title">Diyanet İşleri Türk İslam Birliği</h1>
+                    <h2 class="header-subtitle">2026 Yılı Ramazan İmsakiyesi</h2>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Giriş Sayfası Header (Üst sağda) -->
+        <div id="entry-header" class="entry-header" style="display: none;">
+            <div class="entry-header-content">
+                <span class="entry-header-text">Diyanet İşleri Türk İslam Birliği</span>
+                <div class="entry-header-logo">DİTİB</div>
+            </div>
+        </div>
+
+        <!-- Giriş Sayfası - Seçim Paneli -->
+        <div id="selection-page" class="selection-page">
+            <div class="selection-form-card">
+                <!-- Logo (Kutucuğun içinde, başlığın üzerinde) -->
+                <div class="form-logo">
+                    <img src="logo.webp" alt="DİTİB Logo" class="form-logo-img">
+                </div>
+                <h2 class="form-title">RAMAZAN İMSAKİYESİ 2026</h2>
+                <div class="form-group">
+                    <label for="state-select">Eyalet Seçin:</label>
+                    <select id="state-select" class="select-box">
+                        <option value="">-- Eyalet Seçin --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="city-select">Şehir Seçin:</label>
+                    <select id="city-select" class="select-box" disabled>
+                        <option value="">-- Önce Eyalet Seçin --</option>
+                    </select>
+                </div>
+
+                <button id="continue-btn" class="btn-continue" disabled>
+                    İmsakiye Oluştur
+                </button>
+            </div>
+        </div>
+
+        <!-- Bilgilendirme Notu (İmsakiye sayfasında gösterilecek) -->
+        <div class="info-note no-print" id="info-note" style="display: none;">
+            <ul>
+                <li><strong>Bilgilendirme:</strong></li>
+                <li>Başlık kısmını düzenleyerek caminizin/derneğinizin adını yazınız.</li>
+                <li>Namaz vakitlerini kontrol ediniz, sorun varsa gerekli düzeltmeleri ilgili alana tıklayarak yapınız.</li>
+                <li><strong>PDF olarak yazdır</strong> butonuna tıklayarak yazdırınız.</li>
+            </ul>
+        </div>
+
+        <!-- İmsakiye Sayfası -->
+        <div id="imsakiye-container" class="imsakiye-container" style="display: none;">
+            <div class="imsakiye-header">
+                <div class="title-edit-wrapper">
+                    <h2 id="location-title" contenteditable="true" title="Başlığı düzenlemek için tıklayın"></h2>
+                    <button class="edit-title-btn" onclick="editTitle()" title="Başlığı düzenle">✏️</button>
+                </div>
+                <p id="ramazan-info">Hicri 1447 / Miladi 2026 Yılı <span class="ramazan-title">Ramazan Ayı İmsakiyesi</span></p>
+            </div>
+
+            <div class="imsakiye-table-wrapper">
+                <table id="imsakiye-table" class="imsakiye-table">
+                    <thead>
+                        <tr>
+                            <th>Hicri Tarih</th>
+                            <th>Miladi Tarih</th>
+                            <th>İmsak</th>
+                            <th>Güneş</th>
+                            <th>Öğle</th>
+                            <th>İkindi</th>
+                            <th>Akşam</th>
+                            <th>Yatsı</th>
+                        </tr>
+                    </thead>
+                    <tbody id="imsakiye-tbody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="bayram-namazi-info" class="bayram-namazi-info" style="display: none;">
+                <div class="bayram-namazi-content">
+                    <span class="bayram-tarih" id="bayram-tarih"></span>
+                    <span class="bayram-namazi-text">Bayram Namazı : <span id="bayram-namazi-vakti" contenteditable="true"></span></span>
+                    <span class="fitre-miktari">Fitre Miktarı: <span id="fitre-miktari-value" contenteditable="true">15 €</span></span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="print-pdf-btn" class="btn-pdf">
+                    📄 PDF Olarak Yazdır
+                </button>
+            </div>
+        </div>
+
+        <!-- Tema Seçim Modalı -->
+        <div id="theme-modal" class="theme-modal" style="display: none;">
+            <div class="theme-modal-content">
+                <h3>Tema Seçin</h3>
+                <div class="theme-options">
+                    <div class="theme-option" data-theme="tema1">
+                        <img src="tema1.png" alt="Tema 1" class="theme-preview">
+                        <p>Tema 1</p>
+                    </div>
+                    <div class="theme-option" data-theme="tema2">
+                        <img src="tema2.png" alt="Tema 2" class="theme-preview">
+                        <p>Tema 2</p>
+                    </div>
+                    <div class="theme-option" data-theme="tema3">
+                        <img src="tema3.png" alt="Tema 3" class="theme-preview">
+                        <p>Tema 3</p>
+                    </div>
+                    <div class="theme-option" data-theme="tema4">
+                        <img src="tema4.png" alt="Tema 4" class="theme-preview">
+                        <p>Tema 4</p>
+                    </div>
+                    <div class="theme-option" data-theme="tema5">
+                        <img src="tema5.png" alt="Tema 5" class="theme-preview">
+                        <p>Tema 5</p>
+                    </div>
+                    <div class="theme-option" data-theme="tema6">
+                        <img src="tema6.png" alt="Tema 6" class="theme-preview">
+                        <p>Tema 6</p>
+                    </div>
+                </div>
+                <div class="theme-modal-buttons">
+                    <button id="cancel-theme-btn" class="btn-cancel">İptal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Modal -->
+        <div id="loading-modal" class="loading-modal" style="display: none;">
+            <div class="loading-modal-content">
+                <div class="spinner"></div>
+                <p id="loading-message">İmsakiyeniz Oluşturuluyor...</p>
+                <p class="loading-subtitle">Lütfen bekleyiniz...</p>
+            </div>
+        </div>
+
+        <div id="error-message" class="error-message" style="display: none;"></div>
+        
+        <!-- Footer - Sadece imsakiye sayfasında görünür -->
+        <footer id="main-footer" class="entry-footer" style="display: none;">
+            <div class="entry-footer-content">
+                <p class="entry-footer-copyright">© 2026 DİTİB e.V | All Rights Reserved. Emre Sarıçayır</p>
+            </div>
+        </footer>
+        
+        <!-- Giriş Sayfası Footer -->
+        <footer id="entry-footer" class="entry-footer">
+            <div class="entry-footer-content">
+                <p class="entry-footer-copyright">© 2026 DİTİB e.V | All Rights Reserved. Emre Sarıçayır</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js?v=20260104"></script>
+</body>
+</html>
+

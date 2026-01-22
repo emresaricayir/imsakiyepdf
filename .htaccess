@@ -1,0 +1,53 @@
+# Apache Configuration for İmsakiye App
+# Paylaşımlı hosting için
+
+# UTF-8 encoding
+AddDefaultCharset UTF-8
+
+# API routing
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /imsakiye/
+    
+    # API isteklerini api.php'ye yönlendir
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^api/(.*)$ api.php?path=$1 [QSA,L]
+</IfModule>
+
+# Diğer dosyalar için normal erişim
+DirectoryIndex index.html index.php
+
+# Gzip compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache control
+<IfModule mod_expires.c>
+    ExpiresActive On
+    # HTML dosyaları için cache'i devre dışı bırak (her zaman güncel versiyon)
+    ExpiresByType text/html "access plus 0 seconds"
+    # CSS ve JS için kısa cache (geliştirme için) - production'da artırılabilir
+    ExpiresByType text/css "access plus 0 seconds"
+    ExpiresByType application/javascript "access plus 0 seconds"
+    # Resimler için uzun cache (değişmezler)
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+</IfModule>
+
+# Cache-Control header'ları (mod_expires yoksa)
+<IfModule mod_headers.c>
+    # HTML dosyaları için cache'i devre dışı bırak
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+    # CSS ve JS için no-cache (version query string ile cache-busting yapıyoruz)
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
+</IfModule>

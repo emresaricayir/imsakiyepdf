@@ -1,0 +1,2957 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    color: #333;
+    background: url('bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Giriş sayfası için arka plan overlay (opsiyonel - görünürlüğü artırmak için) */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.25) 100%);
+    backdrop-filter: blur(0.5px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: transparent;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+}
+
+/* Giriş sayfası - Seçim sayfası */
+.selection-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    position: relative;
+}
+
+.selection-form-card {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 48px 40px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.selection-form-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 56px rgba(0, 0, 0, 0.22), 0 8px 24px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Form kartı içindeki logo */
+.form-logo {
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.form-logo-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    display: inline-block;
+    filter: drop-shadow(0 4px 12px rgba(128, 2, 6, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.form-logo-img:hover {
+    transform: scale(1.05);
+}
+
+.form-title {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #800206;
+    text-align: center;
+    margin-bottom: 32px;
+    letter-spacing: -0.02em;
+}
+
+/* İmsakiye sayfası için container */
+.imsakiye-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    margin: 20px auto;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Giriş sayfası header (üst sağda) */
+.entry-header {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 12px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.entry-header:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.entry-header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.entry-header-text {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #1f2937;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+}
+
+.entry-header-logo {
+    background: linear-gradient(135deg, #800206 0%, #a00208 100%);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9em;
+    box-shadow: 0 2px 8px rgba(128, 2, 6, 0.2);
+}
+
+/* Ana header (imsakiye sayfasında) */
+header {
+    background: linear-gradient(135deg, #800206 0%, #a00208 100%);
+    color: white;
+    padding: 56px 40px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(128, 2, 6, 0.25), 0 4px 16px rgba(128, 2, 6, 0.15);
+    position: relative;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 0 0 24px 24px;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.header-logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.header-logo {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.header-logo:hover {
+    transform: scale(1.05);
+}
+
+.header-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.header-main-title {
+    font-size: 2.2em;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    line-height: 1.2;
+}
+
+.header-subtitle {
+    font-size: 1.4em;
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    opacity: 0.95;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    font-style: italic;
+}
+
+header h1 {
+    font-size: 2.2em;
+    margin: 0;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.subtitle {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+.selection-panel {
+    padding: 30px;
+    background: rgba(248, 249, 250, 0.7);
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+/* Giriş sayfası form grubu */
+.selection-form-card .form-group {
+    margin-bottom: 25px;
+}
+
+.selection-form-card .form-group:last-of-type {
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 0.95em;
+    letter-spacing: 0.01em;
+}
+
+.select-box {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1em;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.select-box:hover {
+    border-color: #800206;
+    background: #fef2f2;
+}
+
+.select-box:focus {
+    outline: none;
+    border-color: #800206;
+    box-shadow: 0 0 0 4px rgba(128, 2, 6, 0.1);
+    background: #ffffff;
+}
+
+.select-box:disabled {
+    background: #f9fafb;
+    cursor: not-allowed;
+    opacity: 0.6;
+    border-color: #e5e7eb;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Devam Et Butonu */
+.btn-continue {
+    width: 100%;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #800206 0%, #a00208 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.05em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 12px;
+    box-shadow: 0 4px 14px rgba(128, 2, 6, 0.25), 0 2px 4px rgba(128, 2, 6, 0.1);
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-continue::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-continue:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+.btn-continue:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(128, 2, 6, 0.35), 0 4px 8px rgba(128, 2, 6, 0.15);
+    background: linear-gradient(135deg, #a00208 0%, #800206 100%);
+}
+
+.btn-continue:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(128, 2, 6, 0.25);
+}
+
+.btn-continue:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #9ca3af;
+    box-shadow: none;
+    transform: none;
+}
+
+.imsakiye-container {
+    padding: 0 20px 100px 20px; /* Alt padding footer için eklendi */
+    background: transparent; /* Arka plan görünsün */
+    margin-top: 40px;
+    margin-bottom: 80px; /* Footer için ekstra boşluk */
+}
+
+.info-note {
+    background: linear-gradient(135deg, rgba(254, 242, 242, 0.95) 0%, rgba(255, 247, 237, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-left: 4px solid #800206;
+    padding: 20px 24px;
+    margin: 24px auto;
+    max-width: 1200px;
+    width: 100%;
+    border-radius: 12px;
+    text-align: left;
+    box-shadow: 0 4px 16px rgba(128, 2, 6, 0.1), 0 2px 8px rgba(128, 2, 6, 0.05);
+    border: 1px solid rgba(128, 2, 6, 0.1);
+}
+
+.info-note ul {
+    margin: 0;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.info-note ul li {
+    margin-bottom: 12px;
+    color: #800206;
+    font-size: 0.95em;
+    line-height: 1.7;
+    font-weight: 500;
+    position: relative;
+    padding-left: 28px;
+}
+
+.info-note ul li:before {
+    content: "•";
+    position: absolute;
+    left: 8px;
+    color: #800206;
+    font-weight: bold;
+    font-size: 1.4em;
+    line-height: 1.3;
+}
+
+.info-note ul li:last-child {
+    margin-bottom: 0;
+}
+
+.info-note p {
+    margin: 0;
+    color: #800206;
+    font-size: 0.95em;
+    line-height: 1.7;
+    font-weight: 500;
+}
+
+.imsakiye-header {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 0;
+    padding: 36px 48px;
+    padding-bottom: 20px;
+    background: linear-gradient(135deg, rgba(254, 242, 242, 0.6) 0%, rgba(255, 247, 237, 0.6) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(128, 2, 6, 0.15);
+    border-radius: 0;
+}
+
+.title-edit-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 2px;
+}
+
+.imsakiye-header h2 {
+    font-size: 2em;
+    color: #b14f06; /* Koyu turkuaz */
+    margin: 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    min-width: 200px;
+    outline: none;
+}
+
+.imsakiye-header h2:focus {
+    background-color: rgba(0, 107, 125, 0.1); /* Koyu turkuaz arka plan */
+    border: 2px dashed #b14f06; /* Koyu turkuaz kenarlık */
+}
+
+.edit-title-btn {
+    background: #b14f06; /* Koyu turkuaz */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    opacity: 0.7;
+}
+
+.edit-title-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    background: #005a6b; /* Daha koyu turkuaz */
+}
+
+#ramazan-info {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+}
+
+#ramazan-info .ramazan-title {
+    color: #b14f06; /* Koyu turkuaz */
+    font-weight: 600;
+}
+
+/* IBAN Alanı */
+.iban-info {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 1em;
+    text-align: center;
+}
+
+.iban-label {
+    color: #b14f06; /* Koyu turkuaz - tema rengi */
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.iban-value {
+    color: #b14f06; /* Koyu turkuaz - tema rengi */
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 200px;
+    outline: none;
+    transition: background-color 0.3s;
+    cursor: text;
+    text-align: left;
+}
+
+.iban-value:hover {
+    background-color: rgba(177, 79, 6, 0.1); /* Koyu turkuaz arka plan */
+}
+
+.iban-value:focus {
+    background-color: rgba(177, 79, 6, 0.15);
+    border: 2px dashed #b14f06;
+}
+
+.imsakiye-table-wrapper {
+    overflow-x: auto;
+    margin: 10px auto 30px auto;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.imsakiye-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: auto; /* SABİT GENİŞLİK KALDIRILDI - Daralmayı önler */
+}
+
+/* MOBİLDE TABLO RESPONSIVE - SADECE HTML GÖRÜNÜMÜ (PDF DEĞİL) - MEVCUT YAPI KORUNUYOR */
+@media (max-width: 768px) {
+    /* PDF modunda değilse mobil uyumlu yap - mevcut tablo yapısını koru */
+    body:not(.pdf-mode) .container {
+        overflow-x: visible !important;
+    }
+    
+    body:not(.pdf-mode) .imsakiye-container {
+        overflow-x: visible !important;
+        padding: 0 10px 100px 10px !important;
+        max-width: 100% !important;
+    }
+    
+    body:not(.pdf-mode) .imsakiye-table-wrapper {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 10px 0 20px 0 !important;
+    }
+    
+    /* Tablo yapısını koru, sadece boyutları optimize et */
+    body:not(.pdf-mode) .imsakiye-table {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        font-size: 0.75em !important;
+        table-layout: auto !important;
+        display: table !important;
+    }
+    
+    /* Header'ı koru ama daha küçük yap */
+    body:not(.pdf-mode) .imsakiye-table thead {
+        display: table-header-group !important;
+    }
+    
+    body:not(.pdf-mode) .imsakiye-table tbody {
+        display: table-row-group !important;
+    }
+    
+    body:not(.pdf-mode) .imsakiye-table tr {
+        display: table-row !important;
+    }
+    
+    body:not(.pdf-mode) .imsakiye-table th,
+    body:not(.pdf-mode) .imsakiye-table td {
+        display: table-cell !important;
+        padding: 6px 4px !important;
+        font-size: 0.85em !important;
+        word-break: break-word !important;
+    }
+    
+    /* Header stilleri */
+    body:not(.pdf-mode) .imsakiye-table th {
+        font-size: 0.8em !important;
+        padding: 8px 4px !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Sütun genişliklerini mobil için optimize et */
+    body:not(.pdf-mode) .imsakiye-table th:nth-child(1),
+    body:not(.pdf-mode) .imsakiye-table td:nth-child(1) {
+        width: 12% !important;
+        min-width: 80px !important;
+    }
+    
+    body:not(.pdf-mode) .imsakiye-table th:nth-child(2),
+    body:not(.pdf-mode) .imsakiye-table td:nth-child(2) {
+        width: 18% !important;
+        min-width: 100px !important;
+    }
+    
+    body:not(.pdf-mode) .imsakiye-table th:nth-child(3),
+    body:not(.pdf-mode) .imsakiye-table td:nth-child(3),
+    body:not(.pdf-mode) .imsakiye-table th:nth-child(4),
+    body:not(.pdf-mode) .imsakiye-table td:nth-child(4),
+    body:not(.pdf-mode) .imsakiye-table th:nth-child(5),
+    body:not(.pdf-mode) .imsakiye-table td:nth-child(5),
+    body:not(.pdf-mode) .imsakiye-table th:nth-child(6),
+    body:not(.pdf-mode) .imsakiye-table td:nth-child(6),
+    body:not(.pdf-mode) .imsakiye-table th:nth-child(7),
+    body:not(.pdf-mode) .imsakiye-table td:nth-child(7),
+    body:not(.pdf-mode) .imsakiye-table th:nth-child(8),
+    body:not(.pdf-mode) .imsakiye-table td:nth-child(8) {
+        width: 11% !important;
+        min-width: 60px !important;
+    }
+    
+    /* Bayram namazı bölümü mobilde responsive */
+    body:not(.pdf-mode) .bayram-namazi-info {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* PDF modunda responsive genişlikler */
+    body.pdf-mode .imsakiye-table {
+        max-width: 1400px !important;
+        width: 100% !important;
+        font-size: 1.1em !important;
+        table-layout: fixed !important;
+        margin: 0 auto !important;
+    }
+    
+    body.pdf-mode .imsakiye-table-wrapper {
+        max-width: 1400px !important;
+        width: 100% !important;
+        overflow-x: visible !important;
+        margin: 0 auto !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+}
+
+/* Sütun genişlikleri - 2. sütun (Miladi Tarih) daha geniş */
+.imsakiye-table th:nth-child(1),
+.imsakiye-table td:nth-child(1) {
+    width: 15%; /* Hicri - genişletildi */
+}
+
+.imsakiye-table th:nth-child(2),
+.imsakiye-table td:nth-child(2) {
+    width: 22%; /* Miladi Tarih - genişletildi */
+    text-align: left !important; /* Sola yasla */
+    padding-left: 12px !important; /* Sol taraftan padding */
+}
+
+.imsakiye-table th:nth-child(3),
+.imsakiye-table td:nth-child(3),
+.imsakiye-table th:nth-child(4),
+.imsakiye-table td:nth-child(4),
+.imsakiye-table th:nth-child(5),
+.imsakiye-table td:nth-child(5),
+.imsakiye-table th:nth-child(6),
+.imsakiye-table td:nth-child(6),
+.imsakiye-table th:nth-child(7),
+.imsakiye-table td:nth-child(7),
+.imsakiye-table th:nth-child(8),
+.imsakiye-table td:nth-child(8) {
+    width: 10.5%; /* Diğer sütunlar - biraz küçültüldü */
+}
+
+.imsakiye-table thead {
+    background: linear-gradient(135deg, #b14f06 0%, #b7746f 100%); /* Koyu turkuazdan açığa gradyan */
+    color: white;
+}
+
+.imsakiye-table th {
+    padding: 7px 5px; /* Bir tık daha geniş - yatay ve dikey boşluk arttı */
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.15em;
+    word-wrap: break-word;
+}
+
+.imsakiye-table td {
+    padding: 7px 5px; /* Bir tık daha geniş - satır yüksekliği arttı */
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-size: 1.15em;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    transition: background-color 0.2s ease;
+}
+
+/* Düzenlenebilir hücreler için hover ve focus stilleri */
+.imsakiye-table td[contenteditable="true"] {
+    cursor: text;
+    outline: none;
+}
+
+.imsakiye-table td[contenteditable="true"]:hover {
+    background-color: rgba(102, 126, 234, 0.1) !important;
+}
+
+.imsakiye-table td[contenteditable="true"]:focus {
+    background-color: rgba(102, 126, 234, 0.15) !important;
+    border: 2px dashed #667eea;
+    border-radius: 3px;
+}
+
+/* Zebra striping - satırlar arası renk farkı */
+.imsakiye-table tbody tr:nth-child(even):not(.kadir-gecesi-row) {
+    background-color: rgba(240, 248, 250, 0.5); /* Açık turkuaz tonu */
+}
+
+.imsakiye-table tbody tr:nth-child(odd):not(.kadir-gecesi-row) {
+    background-color: transparent; /* Şeffaf (mevcut renk) */
+}
+
+.imsakiye-table tbody tr:hover {
+    background: #f8f9ff;
+}
+
+.imsakiye-table tbody tr:last-child td {
+    border-bottom: 2px solid #b14f06; /* Son satırda da koyu turkuaz çizgi */
+}
+
+/* İmsak sütunu - kırmızı metin, bold, arka plan yok */
+.imsakiye-table tbody td.imsak-cell {
+    background-color: transparent !important;
+    color: #dc3545 !important; /* Kırmızı metin */
+    font-weight: bold;
+}
+
+/* Akşam sütunu - koyu yeşil metin, bold */
+.imsakiye-table tbody td.aksam-cell {
+    color: #28a745 !important; /* Koyu yeşil */
+    font-weight: bold;
+}
+
+/* Kadir Gecesi satırı - Varsayılan Tema 1 */
+.imsakiye-table tbody tr.kadir-gecesi-row {
+    background-color: #b14f06 !important; /* Koyu turkuaz arka plan - Tema 1 rengi */
+}
+
+.imsakiye-table tbody td.kadir-gecesi-cell {
+    background-color: #b14f06 !important; /* Koyu turkuaz arka plan - Tema 1 rengi */
+    color: #ffffff !important; /* Beyaz metin */
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+/* Tema 1 - Kadir Gecesi (açık stil) */
+body.theme-1 .kadir-gecesi-row,
+body:not([class*="theme-"]) .kadir-gecesi-row {
+    background-color: #b14f06 !important;
+}
+
+body.theme-1 .kadir-gecesi-cell,
+body:not([class*="theme-"]) .kadir-gecesi-cell {
+    background-color: #b14f06 !important;
+    color: #ffffff !important;
+}
+
+body.theme-1 .kadir-gecesi-row td,
+body:not([class*="theme-"]) .kadir-gecesi-row td {
+    border-bottom: 3px solid #b14f06 !important; /* Alt taraf dolgusu - daha kalın */
+}
+
+/* Bayram Namazı Bilgisi */
+.bayram-namazi-info {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.bayram-namazi-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.bayram-tarih {
+    color: #b14f06; /* Koyu turkuaz */
+    font-weight: bold;
+    flex: 0 0 auto;
+    font-size: 1em;
+}
+
+.bayram-namazi-text {
+    color: #b14f06; /* Koyu turkuaz */
+    flex: 1;
+    text-align: center;
+    font-size: 1em;
+}
+
+.bayram-namazi-text span {
+    color: #28a745; /* Koyu yeşil */
+    font-size: 1em;
+}
+
+/* Bayram namazı vakti düzenlenebilir stil */
+#bayram-namazi-vakti[contenteditable="true"] {
+    cursor: text;
+    outline: none;
+    padding: 2px 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+    min-width: 50px;
+}
+
+#bayram-namazi-vakti[contenteditable="true"]:hover {
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+#bayram-namazi-vakti[contenteditable="true"]:focus {
+    background-color: rgba(40, 167, 69, 0.15);
+    border: 2px dashed #28a745;
+}
+
+.fitre-miktari {
+    color: #b14f06; /* Bayram Namazı ile aynı renk */
+    font-weight: bold;
+    flex: 0 0 auto;
+    font-size: 1em;
+    margin-right: auto; /* Sola kaydırmak için */
+    text-align: left; /* Sola hizala */
+}
+
+/* Fitre miktarı düzenlenebilir stil */
+#fitre-miktari-value[contenteditable="true"] {
+    cursor: text;
+    outline: none;
+    padding: 2px 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+    min-width: 50px;
+}
+
+#fitre-miktari-value[contenteditable="true"]:hover {
+    background-color: rgba(0, 107, 125, 0.1);
+}
+
+#fitre-miktari-value[contenteditable="true"]:focus {
+    background-color: rgba(0, 107, 125, 0.15);
+    border: 2px dashed #b14f06;
+}
+
+/* Responsive için */
+@media (max-width: 768px) {
+    .bayram-namazi-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .bayram-tarih,
+    .bayram-namazi-text,
+    .fitre-miktari {
+        width: 100%;
+    }
+}
+
+.action-buttons {
+    text-align: center;
+    padding: 24px 0 32px 0;
+    border-top: 2px solid #e0e0e0;
+    margin-top: 20px;
+}
+
+.btn-pdf {
+    padding: 15px 40px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.btn-pdf:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+    background: #c82333;
+}
+
+/* Loading Modal */
+.loading-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.loading-modal-content {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 48px 56px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 320px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.loading-modal-content .spinner {
+    border: 4px solid #f3f4f6;
+    border-top: 4px solid #800206;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 28px;
+    box-shadow: 0 4px 12px rgba(128, 2, 6, 0.15);
+}
+
+.loading-modal-content p {
+    margin: 0;
+    font-size: 1.25em;
+    font-weight: 600;
+    color: #1f2937;
+    letter-spacing: 0.01em;
+}
+
+.loading-modal-content .loading-subtitle {
+    margin-top: 12px;
+    font-size: 0.95em;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-message {
+    background: linear-gradient(135deg, rgba(254, 226, 226, 0.95) 0%, rgba(252, 165, 165, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #991b1b;
+    padding: 18px 24px;
+    border-radius: 12px;
+    margin: 24px auto;
+    max-width: 1200px;
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.15), 0 2px 8px rgba(220, 38, 38, 0.1);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border: 1px solid #f5c6cb;
+}
+
+/* Giriş Sayfası Footer */
+.entry-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 20px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08), 0 -2px 8px rgba(0, 0, 0, 0.04);
+    z-index: 1000;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.entry-footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.entry-footer-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.entry-footer-logo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85em;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.entry-footer-logo-item:first-child {
+    color: #16a34a;
+}
+
+.entry-footer-logo-item:last-child {
+    color: #16a34a;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.entry-footer-copyright {
+    font-size: 0.85em;
+    color: #6b7280;
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+/* Footer - Sadece HTML'de görünür (İmsakiye sayfasında) */
+.page-footer {
+    margin-top: 50px;
+    padding: 30px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(177, 79, 6, 0.05) 0%, rgba(183, 116, 111, 0.05) 100%);
+    border-top: 3px solid #b14f06;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-text {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.95em;
+    line-height: 1.8;
+    font-weight: 400;
+}
+
+.footer-signature {
+    margin: 15px 0 0 0;
+    color: #333;
+    font-size: 1em;
+    line-height: 1.8;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.footer-name {
+    color: #b14f06;
+    font-weight: 600;
+    font-style: normal;
+}
+
+/* PDF için özel stiller - Tarayıcı yazdırma motoru */
+/* PDF / YAZDIRMA AYARLARI (Daralma Sorununu Çözen Kısım) */
+@media print {
+    @page {
+        size: A4;
+        margin: 5mm; /* Kenar boşluklarını azalttık */
+    }
+    
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    html, body {
+        width: 210mm;
+        height: 297mm;
+        margin: 0;
+        padding: 0;
+        /* Arka plan artık tema resimleri ile yönetiliyor */
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    body {
+        padding: 0;
+        background: white !important;
+        position: relative;
+    }
+    
+    .container {
+        width: 100% !important;
+        max-width: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        position: relative;
+        z-index: 1;
+    }
+    
+    header,
+    .selection-panel,
+    .action-buttons,
+    .btn-pdf,
+    #loading,
+    .error-message,
+    .info-note,
+    .page-footer {
+        display: none !important; /* Gereksiz yerleri gizle */
+    }
+    
+    /* PDF'de form-group'ları eski haline döndür */
+    .form-group {
+        margin-bottom: 20px;
+        flex: none;
+        min-width: auto;
+    }
+    
+    .imsakiye-container {
+        padding: 10mm 5mm !important;
+        margin-top: 50px !important;
+        background: transparent !important;
+        page-break-inside: avoid;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .imsakiye-header {
+        margin-top: 110px !important; /* 80px'den 110px'e çıkarıldı - biraz daha aşağı */
+        margin-bottom: 5px !important;
+        padding-bottom: 25px !important;
+        border-bottom: 2px solid #e0e0e0 !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    .imsakiye-header h2 {
+        font-size: 2em !important;
+        color: #b14f06 !important; /* Koyu turkuaz */
+    }
+    
+    #ramazan-info {
+        font-size: 1.1em !important;
+        color: #666 !important;
+    }
+    
+    .imsakiye-table-wrapper {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+        page-break-inside: avoid;
+    }
+    
+    .imsakiye-table {
+        table-layout: auto !important; /* Otomatik genişlik */
+        width: 100% !important;
+        font-size: 10pt !important; /* Yazı boyutunu A4'e göre sabitledik */
+        border-collapse: collapse !important;
+        background: white !important;
+        box-shadow: none !important;
+        page-break-inside: auto;
+    }
+    
+    .imsakiye-table thead {
+        background: #b14f06 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .imsakiye-table th {
+        background: #b14f06 !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        padding: 3px 1px !important;
+        border: 1px solid #ddd !important;
+        word-wrap: normal !important;
+        font-size: 10pt !important;
+        font-weight: bold !important;
+    }
+    
+    /* Tarih sütunu biraz daha geniş olabilir */
+    .imsakiye-table th:nth-child(2) {
+        width: 20%;
+    }
+    
+    .imsakiye-table td {
+        padding: 3px 1px !important;
+        border: 1px solid #ddd !important;
+        word-wrap: normal !important;
+        font-size: 10pt !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Zebra striping - satırlar arası renk farkı (PDF için) */
+    .imsakiye-table tbody tr:nth-child(even):not(.kadir-gecesi-row) {
+        background-color: rgba(240, 248, 250, 0.5) !important; /* Açık turkuaz tonu */
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .imsakiye-table tbody tr:nth-child(odd):not(.kadir-gecesi-row) {
+        background-color: transparent !important; /* Şeffaf (mevcut renk) */
+    }
+    
+    .imsakiye-table tbody td.imsak-cell {
+        background-color: transparent !important;
+        color: #dc3545 !important; /* Kırmızı metin */
+        font-weight: bold !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .imsakiye-table tbody td.aksam-cell {
+        color: #28a745 !important; /* Koyu yeşil */
+        font-weight: bold !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .imsakiye-table tbody tr.kadir-gecesi-row {
+        background-color: #b14f06 !important; /* Koyu kahverengi arka plan */
+    }
+    
+    .imsakiye-table tbody td.kadir-gecesi-cell {
+        background-color: #b14f06 !important; /* Koyu kahverengi arka plan */
+        color: #ffffff !important; /* Beyaz metin */
+        font-weight: bold !important;
+        font-size: 1.1em !important;
+        text-align: center !important;
+        padding: 15px 8px !important;
+        border-bottom: 2px solid #b14f06 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .imsakiye-table tbody tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+    
+    /* Sayfa sonlarında tablo başlıklarını tekrarla */
+    .imsakiye-table thead {
+        display: table-header-group !important;
+    }
+    
+    .imsakiye-table tbody {
+        display: table-row-group !important;
+    }
+}
+
+/* MOBİL GÖRÜNÜM AYARLARI */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        padding: 30px 20px;
+    }
+    
+    .header-logo-container {
+        margin-bottom: 5px;
+    }
+    
+    .header-logo {
+        height: 60px;
+    }
+    
+    .header-main-title {
+        font-size: 1.6em;
+    }
+    
+    .header-subtitle {
+        font-size: 1.1em;
+    }
+    
+    header h1 {
+        font-size: 1.6em;
+    }
+    
+    /* Mobilde tabloyu daraltma - masaüstü genişliğinde sabit kalsın, yatay kaydırılsın */
+    .imsakiye-table-wrapper {
+        overflow-x: auto !important;
+        width: 100% !important;
+    }
+    
+    .imsakiye-table {
+        font-size: 1.1em !important; /* Masaüstü ile aynı */
+        width: 1200px !important; /* Masaüstü container genişliği */
+        min-width: 1200px !important;
+        max-width: 1200px !important;
+    }
+    
+    .imsakiye-table th,
+    .imsakiye-table td {
+        padding: 6px 4px !important; /* Masaüstü ile aynı boşluklar */
+    }
+}
+
+/* PDF oluştururken (body.pdf-mode) - Responsive genişlikler */
+body.pdf-mode .container {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    overflow-x: visible !important;
+}
+
+body.pdf-mode .imsakiye-container {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 20px auto !important;
+    overflow-x: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+body.pdf-mode header {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+body.pdf-mode .info-note {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 24px auto !important;
+}
+
+body.pdf-mode .imsakiye-header {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 2px solid rgba(128, 2, 6, 0.15) !important;
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+}
+
+body.pdf-mode .imsakiye-table-wrapper {
+    max-width: 1400px !important;
+    width: 100% !important;
+    overflow-x: visible !important;
+    margin: 10px auto 30px auto !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+body.pdf-mode .imsakiye-table {
+    max-width: 1400px !important;
+    width: 100% !important;
+    font-size: 1.2em !important;
+    table-layout: fixed !important;
+    margin: 0 auto !important;
+}
+
+/* PDF mode için sütun genişlikleri - mobil ile aynı */
+body.pdf-mode .imsakiye-table th:nth-child(1),
+body.pdf-mode .imsakiye-table td:nth-child(1) {
+    width: 250px !important;
+    min-width: 250px !important;
+}
+
+body.pdf-mode .imsakiye-table th:nth-child(2),
+body.pdf-mode .imsakiye-table td:nth-child(2) {
+    width: 300px !important;
+    min-width: 300px !important;
+}
+
+body.pdf-mode .imsakiye-table th:nth-child(3),
+body.pdf-mode .imsakiye-table td:nth-child(3),
+body.pdf-mode .imsakiye-table th:nth-child(4),
+body.pdf-mode .imsakiye-table td:nth-child(4),
+body.pdf-mode .imsakiye-table th:nth-child(5),
+body.pdf-mode .imsakiye-table td:nth-child(5),
+body.pdf-mode .imsakiye-table th:nth-child(6),
+body.pdf-mode .imsakiye-table td:nth-child(6),
+body.pdf-mode .imsakiye-table th:nth-child(7),
+body.pdf-mode .imsakiye-table td:nth-child(7) {
+    width: 137px !important;
+    min-width: 137px !important;
+}
+
+body.pdf-mode .imsakiye-table th:nth-child(8),
+body.pdf-mode .imsakiye-table td:nth-child(8) {
+    width: 150px !important;
+    min-width: 150px !important;
+}
+
+body.pdf-mode .imsakiye-table th,
+body.pdf-mode .imsakiye-table td {
+    padding: 10px 8px !important;
+}
+
+/* PDF mode için bayram namazı bölümünü tablo ile aynı genişlikte yap */
+body.pdf-mode .bayram-namazi-info {
+    width: 1400px !important;
+    min-width: 1400px !important;
+    max-width: 1400px !important;
+}
+
+body.pdf-mode .bayram-namazi-content {
+    width: 100% !important;
+}
+
+.bayram-tarih {
+
+    color: #b14f06; /* Koyu turkuaz */
+    font-weight: bold;
+
+    flex: 0 0 auto;
+    font-size: 1em !important;
+
+}
+
+
+
+.bayram-namazi-text {
+
+    color: #b14f06; /* Koyu turkuaz */
+    flex: 1;
+
+    text-align: center;
+    font-size: 1em !important;
+
+}
+
+
+
+.bayram-namazi-text span {
+
+    color: #28a745; /* Koyu yeşil */
+
+    font-size: 1em !important;
+}
+
+/* Bayram namazı vakti düzenlenebilir stil */
+#bayram-namazi-vakti[contenteditable="true"] {
+    cursor: text;
+    outline: none;
+    padding: 2px 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+    min-width: 50px;
+}
+
+#bayram-namazi-vakti[contenteditable="true"]:hover {
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+#bayram-namazi-vakti[contenteditable="true"]:focus {
+    background-color: rgba(40, 167, 69, 0.15);
+    border: 2px dashed #28a745;
+}
+
+
+
+.fitre-miktari {
+
+    color: #b14f06; /* Koyu turkuaz */
+    font-weight: bold;
+
+    flex: 0 0 auto;
+    font-size: 1em !important;
+
+}
+
+
+/* Fitre miktarı düzenlenebilir stil */
+#fitre-miktari-value[contenteditable="true"] {
+    cursor: text;
+    outline: none;
+    padding: 2px 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+    min-width: 50px;
+}
+
+#fitre-miktari-value[contenteditable="true"]:hover {
+    background-color: rgba(0, 107, 125, 0.1);
+}
+
+#fitre-miktari-value[contenteditable="true"]:focus {
+    background-color: rgba(0, 107, 125, 0.15);
+    border: 2px dashed #b14f06;
+}
+
+
+/* Responsive için */
+
+@media (max-width: 768px) {
+
+    .bayram-namazi-content {
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 10px;
+
+    }
+
+    
+
+    .bayram-tarih,
+
+    .bayram-namazi-text,
+
+    .fitre-miktari {
+
+        width: 100%;
+
+    }
+
+}
+
+
+
+.action-buttons {
+
+    text-align: center;
+
+    padding-top: 20px;
+
+    border-top: 2px solid #e0e0e0;
+
+}
+
+
+
+.btn-pdf {
+
+    padding: 15px 40px;
+
+    background: #dc3545;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 1.1em;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+
+}
+
+
+
+.btn-pdf:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+
+    background: #c82333;
+
+}
+
+
+
+.loading {
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+}
+
+
+
+.spinner {
+
+    border: 4px solid #f3f3f3;
+
+    border-top: 4px solid #667eea;
+
+    border-radius: 50%;
+
+    width: 50px;
+
+    height: 50px;
+
+    animation: spin 1s linear infinite;
+
+    margin: 0 auto 20px;
+
+}
+
+
+
+@keyframes spin {
+
+    0% { transform: rotate(0deg); }
+
+    100% { transform: rotate(360deg); }
+
+}
+
+
+
+.error-message {
+
+    background: #f8d7da;
+
+    color: #721c24;
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    margin: 20px;
+
+    border: 1px solid #f5c6cb;
+
+}
+
+
+
+/* PDF için özel stiller - Tarayıcı yazdırma motoru */
+
+@media print {
+
+    @page {
+
+        size: A4;
+
+        margin: 0;
+
+    }
+
+    
+
+    * {
+
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
+
+    }
+
+    
+
+    html, body {
+
+        width: 210mm;
+
+        height: 297mm;
+
+        margin: 0;
+
+        padding: 0;
+
+        /* Arka plan artık tema resimleri ile yönetiliyor */
+
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
+
+    }
+
+    
+
+    body {
+
+        position: relative;
+
+    }
+
+    
+    
+    .container {
+
+        max-width: 100% !important;
+
+        width: 210mm !important;
+
+        min-height: 297mm !important;
+
+        margin: 0 auto !important;
+
+        padding: 0 !important;
+
+        box-shadow: none !important;
+
+        border-radius: 0 !important;
+
+        background: transparent !important;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    
+    
+    header,
+
+    .selection-panel,
+
+    .action-buttons,
+
+    .btn-pdf,
+
+    #loading,
+
+    .error-message,
+
+    .info-note {
+
+        display: none !important;
+
+    }
+
+    
+    
+    .imsakiye-container {
+
+        padding: 20mm 15mm !important;
+
+        margin: 0 !important;
+
+        background: transparent !important;
+
+        page-break-inside: avoid;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    
+    
+    .imsakiye-header {
+
+        margin-top: 110px !important; /* 80px'den 110px'e çıkarıldı - biraz daha aşağı */
+
+        margin-bottom: 5px !important;
+        padding-bottom: 15px !important;
+
+        border-bottom: 2px solid #e0e0e0 !important;
+
+    }
+
+    
+    
+    .imsakiye-header h2 {
+
+        font-size: 1.8em !important;
+
+        color: #b14f06 !important; /* Koyu turkuaz */
+    }
+
+    
+    
+    #ramazan-info {
+
+        font-size: 1em !important;
+
+        color: #666 !important;
+
+    }
+
+    
+    
+    .imsakiye-table-wrapper {
+
+        margin-top: 20px !important;
+
+        margin-bottom: 20px !important;
+
+        page-break-inside: avoid;
+
+    }
+
+    
+    
+    .imsakiye-table {
+
+        width: 100% !important;
+
+        border-collapse: collapse !important;
+
+        background: white !important;
+
+        box-shadow: none !important;
+
+        page-break-inside: auto;
+
+    }
+
+    
+    
+    .imsakiye-table thead {
+
+        background: linear-gradient(135deg, #b14f06 0%, #b7746f 100%) !important; /* Koyu turkuazdan açığa gradyan */
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
+
+    }
+
+    
+    
+    .imsakiye-table th {
+
+        background: linear-gradient(135deg, #b14f06 0%, #b7746f 100%) !important; /* Koyu turkuazdan açığa gradyan */
+        color: white !important;
+
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
+
+        padding: 8px 8px !important;
+
+        font-size: 1.15em !important;
+
+        font-weight: bold !important;
+        border: 1px solid #005a6b !important;
+
+    }
+
+    
+    
+    .imsakiye-table td {
+
+        padding: 5px 6px !important; /* Satır aralığını azaltmak için */
+
+        font-size: 1.05em !important;
+
+        border-bottom: 2px solid #b14f06 !important; /* Koyu turkuaz, biraz belirgin */
+        line-height: 1.15 !important; /* Satır yüksekliğini azaltmak için */
+
+    }
+
+    
+    
+    /* Zebra striping - satırlar arası renk farkı (PDF için) */
+
+    .imsakiye-table tbody tr:nth-child(even):not(.kadir-gecesi-row) {
+
+        background-color: rgba(240, 248, 250, 0.5) !important; /* Açık turkuaz tonu */
+
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
+
+    }
+
+    
+    
+    .imsakiye-table tbody tr:nth-child(odd):not(.kadir-gecesi-row) {
+
+        background-color: transparent !important; /* Şeffaf (mevcut renk) */
+
+    }
+
+    
+    
+    .imsakiye-table tbody td.imsak-cell {
+
+        background-color: transparent !important;
+
+        color: #dc3545 !important; /* Kırmızı metin */
+
+        font-weight: bold !important;
+
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
+
+    }
+
+    
+    
+    .imsakiye-table tbody td.aksam-cell {
+
+        color: #28a745 !important; /* Koyu yeşil */
+
+        font-weight: bold !important;
+
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
+
+    }
+
+    
+    
+    .imsakiye-table tbody tr.kadir-gecesi-row {
+        background-color: #b14f06 !important; /* Tema 1 rengi - Koyu turkuaz */
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .imsakiye-table tbody td.kadir-gecesi-cell {
+        background-color: #b14f06 !important; /* Tema 1 rengi - Koyu turkuaz */
+        color: #ffffff !important; /* Beyaz metin */
+        font-weight: bold !important;
+        font-size: 1.1em !important;
+        text-align: center !important;
+        padding: 15px 8px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+
+        border-bottom: 2px solid #b14f06 !important;
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
+
+    }
+
+    
+    
+    .imsakiye-table tbody tr {
+
+        page-break-inside: avoid;
+
+        page-break-after: auto;
+
+    }
+
+    
+    
+    /* Sayfa sonlarında tablo başlıklarını tekrarla */
+
+    .imsakiye-table thead {
+
+        display: table-header-group !important;
+
+    }
+
+    
+    
+    .imsakiye-table tbody {
+
+        display: table-row-group !important;
+
+    }
+
+}
+
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        padding: 30px 20px;
+    }
+    
+    .header-logo-container {
+        margin-bottom: 5px;
+    }
+    
+    .header-logo {
+        height: 60px;
+    }
+    
+    .header-main-title {
+        font-size: 1.6em;
+    }
+    
+    .header-subtitle {
+        font-size: 1.1em;
+    }
+    
+    header h1 {
+
+        font-size: 1.8em;
+
+    }
+
+    
+    
+    /* Tablo ayarları üstteki ilk @media (max-width: 768px) query'sinde zaten var ve !important ile güçlendirildi */
+    /* Burada override etmiyoruz, üstteki ayarlar geçerli olacak */
+
+}
+
+/* Tema Seçim Modalı */
+.theme-modal {
+    display: none !important;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.theme-modal.show {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.theme-modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 900px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.theme-modal-content h3 {
+    margin-bottom: 25px;
+    color: #b14f06;
+    font-size: 1.8em;
+}
+
+.theme-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-items: center;
+    margin-bottom: 25px;
+}
+
+.theme-option {
+    cursor: pointer;
+    border: 3px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    background: white;
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Mobil cihazlarda 3x2 grid (3 üstte, 3 altta) */
+@media (max-width: 768px) {
+    .theme-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        justify-items: center;
+    }
+    
+    .theme-option {
+        min-width: auto;
+        width: 100%;
+        max-width: 120px;
+    }
+    
+    .theme-preview {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.theme-option:hover {
+    border-color: #b14f06;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(177, 79, 6, 0.3);
+}
+
+.theme-option.selected {
+    border-color: #b14f06;
+    background: #f5f5f5;
+}
+
+.theme-preview {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.theme-option p {
+    margin: 0;
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.theme-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+    .theme-modal-content {
+        padding: 20px;
+        width: 95%;
+    }
+    
+    .theme-options {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .theme-option {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+/* TEMALAR (Örnek Tema 2) */
+/* Tema 2 - Koyu Turkuaz Renkler */
+body.theme-2 header {
+    background: #006b7d !important; /* Koyu turkuaz */
+}
+
+body.theme-2 .imsakiye-table thead {
+    background: #006b7d !important;
+}
+
+body.theme-2 .info-note {
+    border-left: 4px solid #006b7d;
+}
+
+body.theme-2 .info-note strong,
+body.theme-2 .info-note li {
+    color: #006b7d;
+}
+
+body.theme-2 .imsakiye-header h2 {
+    color: #006b7d;
+}
+
+body.theme-2 .imsakiye-header p {
+    color: #006b7d;
+}
+
+body.theme-2 .edit-title-btn {
+    border: 2px dashed #006b7d;
+}
+
+body.theme-2 .btn-pdf {
+    background: #006b7d;
+}
+
+body.theme-2 .btn-pdf:hover {
+    color: #006b7d;
+}
+
+body.theme-2 .imsakiye-table thead {
+    background: #006b7d !important;
+}
+
+body.theme-2 .imsakiye-table tbody tr {
+    border-bottom: 2px solid #00a8b5;
+}
+
+body.theme-2 .imsakiye-table tbody tr:last-child {
+    border-bottom: 2px solid #006b7d;
+}
+
+body.theme-2 .kadir-gecesi-row {
+    background-color: #006b7d !important;
+}
+
+body.theme-2 .kadir-gecesi-cell {
+    background-color: #006b7d !important;
+    color: #ffffff !important;
+}
+
+body.theme-2 .kadir-gecesi-row td {
+    border-bottom: 3px solid #006b7d !important; /* Alt taraf dolgusu - daha kalın */
+}
+
+body.theme-2 .bayram-namazi-text {
+    color: #006b7d;
+}
+
+body.theme-2 .bayram-namazi-text span {
+    color: #006b7d;
+}
+
+body.theme-2 .fitre-miktari {
+    color: #006b7d;
+}
+
+body.theme-2 .bayram-tarih {
+    color: #006b7d;
+}
+
+body.theme-2 .iban-label,
+body.theme-2 .iban-value {
+    color: #006b7d;
+}
+
+body.theme-2 .iban-value:hover {
+    background-color: rgba(0, 107, 125, 0.1);
+}
+
+body.theme-2 .iban-value:focus {
+    background-color: rgba(0, 107, 125, 0.15);
+    border: 2px dashed #006b7d;
+}
+
+body.theme-2 .theme-modal-content h3 {
+    color: #006b7d;
+}
+
+body.theme-2 .theme-option:hover {
+    border-color: #006b7d;
+    box-shadow: 0 5px 15px rgba(0, 107, 125, 0.3);
+}
+
+body.theme-2 .theme-option.selected {
+    border-color: #006b7d;
+}
+
+/* Tema 2 - Print stilleri */
+@media print {
+    body.theme-2 .imsakiye-table thead {
+        background: #006b7d !important;
+    }
+    
+    body.theme-2 .imsakiye-table tbody tr {
+        border-bottom: 2px solid #006b7d !important;
+    }
+    
+    body.theme-2 .kadir-gecesi-row {
+        background-color: #006b7d !important;
+    }
+    
+    body.theme-2 .kadir-gecesi-cell {
+        background-color: #006b7d !important;
+        color: #ffffff !important;
+    }
+    
+    body.theme-2 .kadir-gecesi-row td {
+        border-bottom: 3px solid #006b7d !important; /* Alt taraf dolgusu - daha kalın */
+    }
+}
+
+/* Tema 3 - Koyu Yeşil Renkler */
+body.theme-3 header {
+    background: #2d5016 !important; /* Koyu yeşil */
+}
+
+body.theme-3 .info-note {
+    border-left: 4px solid #2d5016;
+}
+
+body.theme-3 .info-note strong,
+body.theme-3 .info-note li {
+    color: #2d5016;
+}
+
+body.theme-3 .imsakiye-header h2 {
+    color: #2d5016;
+}
+
+body.theme-3 .imsakiye-header p {
+    color: #2d5016;
+}
+
+body.theme-3 .edit-title-btn {
+    border: 2px dashed #2d5016;
+}
+
+body.theme-3 .btn-pdf {
+    background: #2d5016;
+}
+
+body.theme-3 .btn-pdf:hover {
+    color: #2d5016;
+}
+
+body.theme-3 .imsakiye-table thead tr {
+    background: linear-gradient(135deg, #2d5016 0%, #4a7c2a 100%);
+}
+
+body.theme-3 .imsakiye-table tbody tr {
+    border-bottom: 2px solid #4a7c2a;
+}
+
+body.theme-3 .imsakiye-table tbody tr:last-child {
+    border-bottom: 2px solid #2d5016;
+}
+
+body.theme-3 .kadir-gecesi-row {
+    background-color: #2d5016 !important;
+}
+
+body.theme-3 .kadir-gecesi-cell {
+    background-color: #2d5016 !important;
+    color: #ffffff !important;
+}
+
+body.theme-3 .kadir-gecesi-row td {
+    border-bottom: 3px solid #2d5016 !important; /* Alt taraf dolgusu - daha kalın */
+}
+
+body.theme-3 .bayram-namazi-text {
+    color: #2d5016;
+}
+
+body.theme-3 .bayram-namazi-text span {
+    color: #2d5016;
+}
+
+body.theme-3 .fitre-miktari {
+    color: #2d5016;
+}
+
+body.theme-3 .bayram-tarih {
+    color: #2d5016;
+}
+
+body.theme-3 .iban-label,
+body.theme-3 .iban-value {
+    color: #2d5016;
+}
+
+body.theme-3 .iban-value:hover {
+    background-color: rgba(45, 80, 22, 0.1);
+}
+
+body.theme-3 .iban-value:focus {
+    background-color: rgba(45, 80, 22, 0.15);
+    border: 2px dashed #2d5016;
+}
+
+body.theme-3 .theme-modal-content h3 {
+    color: #2d5016;
+}
+
+body.theme-3 .theme-option:hover {
+    border-color: #2d5016;
+    box-shadow: 0 5px 15px rgba(45, 80, 22, 0.3);
+}
+
+body.theme-3 .theme-option.selected {
+    border-color: #2d5016;
+}
+
+/* Tema 3 - Print stilleri */
+@media print {
+    body.theme-3 .imsakiye-table thead tr {
+        background: linear-gradient(135deg, #2d5016 0%, #4a7c2a 100%) !important;
+    }
+    
+    body.theme-3 .imsakiye-table tbody tr {
+        border-bottom: 2px solid #2d5016 !important;
+    }
+    
+    body.theme-3 .kadir-gecesi-row {
+        background-color: #2d5016 !important;
+    }
+    
+    body.theme-3 .kadir-gecesi-cell {
+        background-color: #2d5016 !important;
+        color: #ffffff !important;
+    }
+    
+    body.theme-3 .kadir-gecesi-row td {
+        border-bottom: 3px solid #2d5016 !important; /* Alt taraf dolgusu - daha kalın */
+    }
+}
+
+/* Tema 4 - Koyu Lacivert ve Altın Renkler (Resme Uygun) */
+body.theme-4 header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2c5282 100%) !important; /* Koyu lacivert */
+}
+
+body.theme-4 .info-note {
+    border-left: 4px solid #1e3a8a;
+}
+
+body.theme-4 .info-note strong,
+body.theme-4 .info-note li {
+    color: #1e3a8a;
+}
+
+body.theme-4 .imsakiye-header h2 {
+    color: #1e3a8a; /* Koyu lacivert */
+}
+
+body.theme-4 .imsakiye-header p {
+    color: #1e3a8a;
+}
+
+body.theme-4 .edit-title-btn {
+    background: #FFD700; /* Altın */
+    border: 2px dashed #FFD700;
+}
+
+body.theme-4 .edit-title-btn:hover {
+    background: #D4AF37; /* Koyu altın */
+}
+
+body.theme-4 .btn-pdf {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2c5282 100%);
+}
+
+body.theme-4 .btn-pdf:hover {
+    background: linear-gradient(135deg, #2c5282 0%, #1e40af 100%);
+    color: white;
+}
+
+body.theme-4 .imsakiye-table thead {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2c5282 100%) !important; /* Koyu lacivert gradyan */
+}
+
+body.theme-4 .imsakiye-table thead th {
+    color: #ffffff !important;
+}
+
+body.theme-4 .imsakiye-table tbody tr {
+    border-bottom: 2px solid #3b82f6; /* Orta ton mavi */
+}
+
+body.theme-4 .imsakiye-table tbody tr:last-child {
+    border-bottom: 2px solid #1e3a8a;
+}
+
+body.theme-4 .kadir-gecesi-row {
+    background-color: #FFD700 !important; /* Altın (finialler rengi) */
+}
+
+body.theme-4 .kadir-gecesi-cell {
+    background-color: #FFD700 !important;
+    color: #000000 !important; /* Siyah metin (altın üzerinde daha okunabilir) */
+    font-weight: bold;
+}
+
+body.theme-4 .kadir-gecesi-row td {
+    border-bottom: 3px solid #FFD700 !important; /* Alt taraf dolgusu - daha kalın */
+}
+
+body.theme-4 .bayram-namazi-text {
+    color: #1e3a8a;
+}
+
+body.theme-4 .bayram-namazi-text span {
+    color: #1e3a8a;
+}
+
+body.theme-4 .fitre-miktari {
+    color: #1e3a8a;
+}
+
+body.theme-4 .bayram-tarih {
+    color: #1e3a8a;
+}
+
+body.theme-4 .iban-label,
+body.theme-4 .iban-value {
+    color: #1e3a8a;
+}
+
+body.theme-4 .iban-value:hover {
+    background-color: rgba(30, 58, 138, 0.1);
+}
+
+body.theme-4 .iban-value:focus {
+    background-color: rgba(30, 58, 138, 0.15);
+    border: 2px dashed #1e3a8a;
+}
+
+body.theme-4 .theme-modal-content h3 {
+    color: #1e3a8a;
+}
+
+body.theme-4 .theme-option:hover {
+    border-color: #1e3a8a;
+    box-shadow: 0 5px 15px rgba(30, 58, 138, 0.3);
+}
+
+body.theme-4 .theme-option.selected {
+    border-color: #1e3a8a;
+}
+
+/* Tema 4 - Print stilleri */
+@media print {
+    body.theme-4 .imsakiye-table thead {
+        background: linear-gradient(135deg, #1e3a8a 0%, #2c5282 100%) !important;
+    }
+    
+    body.theme-4 .imsakiye-table tbody tr {
+        border-bottom: 2px solid #3b82f6 !important;
+    }
+    
+    body.theme-4 .kadir-gecesi-row {
+        background-color: #FFD700 !important;
+    }
+    
+    body.theme-4 .kadir-gecesi-cell {
+        background-color: #FFD700 !important;
+        color: #000000 !important;
+        border-bottom: 3px solid #FFD700 !important; /* Alt taraf dolgusu - daha kalın */
+    }
+    
+    body.theme-4 .kadir-gecesi-row td {
+        border-bottom: 3px solid #FFD700 !important; /* Alt taraf dolgusu - daha kalın */
+    }
+}
+
+/* Tema 5 - Mavi Renkler */
+body.theme-5 header {
+    background: #1e3a8a !important; /* Koyu mavi */
+}
+
+body.theme-5 .info-note {
+    border-left: 4px solid #1e3a8a;
+}
+
+body.theme-5 .info-note strong,
+body.theme-5 .info-note li {
+    color: #1e3a8a;
+}
+
+body.theme-5 .imsakiye-header h2 {
+    color: #1e3a8a;
+}
+
+body.theme-5 .imsakiye-header p {
+    color: #1e3a8a;
+}
+
+body.theme-5 .edit-title-btn {
+    border: 2px dashed #1e3a8a;
+}
+
+body.theme-5 .btn-pdf {
+    background: #1e3a8a;
+}
+
+body.theme-5 .btn-pdf:hover {
+    color: #1e3a8a;
+}
+
+body.theme-5 .imsakiye-table thead tr {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%) !important;
+}
+
+body.theme-5 .imsakiye-table thead th {
+    color: #ffffff !important;
+}
+
+body.theme-5 .imsakiye-table tbody tr {
+    border-bottom: 2px solid #3b82f6;
+}
+
+body.theme-5 .imsakiye-table tbody tr:last-child {
+    border-bottom: 2px solid #1e3a8a;
+}
+
+body.theme-5 .kadir-gecesi-row {
+    background-color: #1e3a8a !important;
+}
+
+body.theme-5 .kadir-gecesi-cell {
+    background-color: #1e3a8a !important;
+    color: #ffffff !important;
+}
+
+body.theme-5 .kadir-gecesi-row td {
+    border-bottom: 3px solid #1e3a8a !important; /* Alt taraf dolgusu - daha kalın */
+}
+
+body.theme-5 .bayram-namazi-text {
+    color: #1e3a8a;
+}
+
+body.theme-5 .bayram-namazi-text span {
+    color: #1e3a8a;
+}
+
+body.theme-5 .bayram-tarih {
+    color: #1e3a8a;
+}
+
+body.theme-5 .iban-label,
+body.theme-5 .iban-value {
+    color: #1e3a8a;
+}
+
+body.theme-5 .iban-value:hover {
+    background-color: rgba(30, 58, 138, 0.1);
+}
+
+body.theme-5 .iban-value:focus {
+    background-color: rgba(30, 58, 138, 0.15);
+    border: 2px dashed #1e3a8a;
+}
+
+body.theme-5 .fitre-miktari {
+    color: #1e3a8a;
+}
+
+body.theme-5 .bayram-tarih {
+    color: #1e3a8a;
+}
+
+body.theme-5 .theme-modal-content h3 {
+    color: #1e3a8a;
+}
+
+body.theme-5 .theme-option:hover {
+    border-color: #1e3a8a;
+    box-shadow: 0 5px 15px rgba(30, 58, 138, 0.3);
+}
+
+body.theme-5 .theme-option.selected {
+    border-color: #1e3a8a;
+}
+
+/* Tema 5 - Print stilleri */
+@media print {
+    body.theme-5 .imsakiye-table thead tr {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%) !important;
+    }
+    
+    body.theme-5 .imsakiye-table thead th {
+        color: #ffffff !important;
+    }
+    
+    body.theme-5 .imsakiye-table tbody tr {
+        border-bottom: 2px solid #1e3a8a !important;
+    }
+    
+    body.theme-5 .kadir-gecesi-row {
+        background-color: #1e3a8a !important;
+    }
+    
+    body.theme-5 .kadir-gecesi-cell {
+        background-color: #1e3a8a !important;
+        color: #ffffff !important;
+    }
+    
+    body.theme-5 .kadir-gecesi-row td {
+        border-bottom: 3px solid #1e3a8a !important; /* Alt taraf dolgusu - daha kalın */
+    }
+}
+
+/* Tema 6 - Kırmızı/Turuncu Renkler */
+body.theme-6 header {
+    background: #dc2626 !important; /* Koyu kırmızı */
+}
+
+body.theme-6 .info-note {
+    border-left: 4px solid #dc2626;
+}
+
+body.theme-6 .info-note strong,
+body.theme-6 .info-note li {
+    color: #dc2626;
+}
+
+body.theme-6 .imsakiye-header h2 {
+    color: #dc2626;
+}
+
+body.theme-6 .imsakiye-header p {
+    color: #dc2626;
+}
+
+body.theme-6 .edit-title-btn {
+    border: 2px dashed #dc2626;
+}
+
+body.theme-6 .btn-pdf {
+    background: #dc2626;
+}
+
+body.theme-6 .btn-pdf:hover {
+    color: #dc2626;
+}
+
+body.theme-6 .imsakiye-table thead tr {
+    background: linear-gradient(135deg, #dc2626 0%, #f97316 100%) !important;
+}
+
+body.theme-6 .imsakiye-table thead th {
+    color: #ffffff !important;
+}
+
+body.theme-6 .imsakiye-table tbody tr {
+    border-bottom: 2px solid #f97316;
+}
+
+body.theme-6 .imsakiye-table tbody tr:last-child {
+    border-bottom: 2px solid #dc2626;
+}
+
+body.theme-6 .kadir-gecesi-row {
+    background-color: #dc2626 !important;
+}
+
+body.theme-6 .kadir-gecesi-cell {
+    background-color: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+body.theme-6 .kadir-gecesi-row td {
+    border-bottom: 3px solid #dc2626 !important; /* Alt taraf dolgusu - daha kalın */
+}
+
+body.theme-6 .bayram-namazi-text {
+    color: #dc2626;
+}
+
+body.theme-6 .bayram-namazi-text span {
+    color: #dc2626;
+}
+
+body.theme-6 .fitre-miktari {
+    color: #dc2626;
+}
+
+body.theme-6 .bayram-tarih {
+    color: #dc2626;
+}
+
+body.theme-6 .iban-label,
+body.theme-6 .iban-value {
+    color: #dc2626;
+}
+
+body.theme-6 .iban-value:hover {
+    background-color: rgba(220, 38, 38, 0.1);
+}
+
+body.theme-6 .iban-value:focus {
+    background-color: rgba(220, 38, 38, 0.15);
+    border: 2px dashed #dc2626;
+}
+
+body.theme-6 .theme-modal-content h3 {
+    color: #dc2626;
+}
+
+body.theme-6 .theme-option:hover {
+    border-color: #dc2626;
+    box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+}
+
+body.theme-6 .theme-option.selected {
+    border-color: #dc2626;
+}
+
+/* Tema 6 - Print stilleri */
+@media print {
+    body.theme-6 .imsakiye-table thead tr {
+        background: linear-gradient(135deg, #dc2626 0%, #f97316 100%) !important;
+    }
+    
+    body.theme-6 .imsakiye-table thead th {
+        color: #ffffff !important;
+    }
+    
+    body.theme-6 .imsakiye-table tbody tr {
+        border-bottom: 2px solid #dc2626 !important;
+    }
+    
+    body.theme-6 .kadir-gecesi-row {
+        background-color: #dc2626 !important;
+    }
+    
+    body.theme-6 .kadir-gecesi-cell {
+        background-color: #dc2626 !important;
+        color: #ffffff !important;
+    }
+    
+    body.theme-6 .kadir-gecesi-row td {
+        border-bottom: 3px solid #dc2626 !important; /* Alt taraf dolgusu - daha kalın */
+    }
+}
+
+/* ============================================
+   MOBİL TABLO GENİŞLİĞİ - EN SON KURAL (TÜM DİĞER KURALLARI OVERRIDE EDER)
+   ============================================ */
+@media (max-width: 768px) {
+    .container {
+        overflow-x: visible !important;
+    }
+    
+    .imsakiye-container {
+        overflow-x: visible !important;
+    }
+    
+    .imsakiye-table-wrapper {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .imsakiye-table {
+        width: 1400px !important;
+        min-width: 1400px !important;
+        max-width: 1400px !important;
+        font-size: 1.1em !important;
+        table-layout: fixed !important;
+    }
+    
+    /* Mobilde sütun genişliklerini piksel olarak sabitle */
+    .imsakiye-table th:nth-child(1),
+    .imsakiye-table td:nth-child(1) {
+        width: 250px !important; /* Hicri */
+        min-width: 250px !important;
+    }
+    
+    .imsakiye-table th:nth-child(2),
+    .imsakiye-table td:nth-child(2) {
+        width: 330px !important; /* Miladi Tarih */
+        min-width: 330px !important;
+    }
+    
+    .imsakiye-table th:nth-child(3),
+    .imsakiye-table td:nth-child(3),
+    .imsakiye-table th:nth-child(4),
+    .imsakiye-table td:nth-child(4),
+    .imsakiye-table th:nth-child(5),
+    .imsakiye-table td:nth-child(5),
+    .imsakiye-table th:nth-child(6),
+    .imsakiye-table td:nth-child(6),
+    .imsakiye-table th:nth-child(7),
+    .imsakiye-table td:nth-child(7),
+    .imsakiye-table th:nth-child(8),
+    .imsakiye-table td:nth-child(8) {
+        width: 137px !important; /* Diğer sütunlar */
+        min-width: 137px !important;
+    }
+    
+    .imsakiye-table th,
+    .imsakiye-table td {
+        padding: 10px 8px !important; /* Daha geniş padding */
+    }
+    
+    /* Bayram namazı bölümünü tablo ile aynı genişlikte yap */
+    .bayram-namazi-info {
+        width: 1400px !important;
+        min-width: 1400px !important;
+        max-width: 1400px !important;
+    }
+    
+    .bayram-namazi-content {
+        width: 100% !important;
+    }
+}
+
+

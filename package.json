@@ -1,0 +1,14 @@
+{
+  "name": "imsakiye-app",
+  "version": "1.0.0",
+  "description": "Diyanet İmsakiye Uygulaması - PDF İmsakiye Oluşturucu",
+  "main": "index.html",
+  "scripts": {
+    "migrate": "php migrate.php",
+    "fetch-data": "python fetch_imsakiye.py"
+  },
+  "keywords": ["imsakiye", "ramazan", "namaz-vakitleri"],
+  "author": "",
+  "license": "MIT"
+}
+
